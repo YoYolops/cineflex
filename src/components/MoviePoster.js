@@ -20,10 +20,12 @@ const Background = styled.div`
 `
 
 const PosterImage = styled.div`
-    background-image: ${props.imageSrc};
+    background-image: url("${props => props.imageSrc}");
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
+    min-width: 100%;
+    min-height: 100%;
 `
 
 export default MoviePoster;
