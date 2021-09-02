@@ -16,6 +16,7 @@ const Container = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #9EADBA;
 `
 
 const Text = styled.p`

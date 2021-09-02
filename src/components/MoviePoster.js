@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function MoviePoster(props) {
     return (
-        <Background >
+        <Background height={props.height} width={props.width}>
             <Link to={{
                 pathname: `/movies/${props.id}`,
                 state: {
@@ -20,14 +20,15 @@ function MoviePoster(props) {
 }
 
 const Background = styled.div`
-    height: 209px;
-    width: 145px;
+    height: ${props => props.height ?? '209px'};
+    width: ${props => props.width ?? '145px'};
     box-shadow: 0.5px 0px 10px 1px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 5px;
     margin-bottom: 15px;
+    background-color: #fff;
 
     a {
         width: 100%;

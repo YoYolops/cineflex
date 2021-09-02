@@ -7,7 +7,6 @@ import MoviePoster from '../components/MoviePoster';
 
 function Home() {
     const [ movies, setMovies ] = useState([]);
-    console.log(movies)
 
     useEffect(() => {
         async function getMovies() {
