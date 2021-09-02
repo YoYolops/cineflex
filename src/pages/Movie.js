@@ -5,9 +5,11 @@ import { useParams } from 'react-router-dom';
 import API from '../utils/api';
 
 import Footer from '../components/Footer';
+import Loading from '../components/Loading';
+import SessionDay from '../components/SessionDay';
 
-function Session() {
-    const [ movieData, setMovieData ] = useState({});
+function Movie() {
+    const [ movieData, setMovieData ] = useState(null);
     const { id } = useParams();
     console.log(movieData)
 
@@ -19,9 +21,14 @@ function Session() {
         getMovieData();
     }, [])
 
+    if(!movieData) return <Loading />
+
     return (
         <Container>
-            <Title>Selecione o Filme</Title>
+            <Title>Selecione o Horário</Title>
+            {
+                movieData.days.map(day => <SessionDay weekday={day.weekday} date={day.date} showtimes={day.showtimes} />)
+            }
             <Footer posterImg={movieData.posterURL} movieData={movieData}/>
         </Container>
     )
@@ -29,6 +36,7 @@ function Session() {
 
 const Container = styled.div`
     background-color: #fff;
+    margin-bottom: 125px;
 `
 
 
@@ -40,4 +48,4 @@ const Title = styled.h1`
     padding: 40px 0px;
 `
 
-export default Session;
+export default Movie;

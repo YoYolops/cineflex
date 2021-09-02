@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import API from '../utils/api';
 
 import MoviePoster from '../components/MoviePoster';
+import Loading from '../components/Loading';
 
 function Home() {
-    const [ movies, setMovies ] = useState([]);
+    const [ movies, setMovies ] = useState(null);
 
     useEffect(() => {
         async function getMovies() {
@@ -15,6 +16,8 @@ function Home() {
         }
         getMovies();
     }, [])
+
+    if(!movies) return <Loading />
 
     return (
         <Container>
