@@ -11,7 +11,6 @@ import SessionDay from '../components/SessionDay';
 function Movie() {
     const [ movieData, setMovieData ] = useState(null);
     const { id } = useParams();
-    console.log(movieData)
 
     useEffect(() => {
         async function getMovieData() {
@@ -19,7 +18,7 @@ function Movie() {
             setMovieData(response.data);
         }
         getMovieData();
-    }, [])
+    }, [id])
 
     if(!movieData) return <Loading />
 
@@ -27,7 +26,7 @@ function Movie() {
         <Container>
             <Title>Selecione o Horário</Title>
             {
-                movieData.days.map(day => <SessionDay weekday={day.weekday} date={day.date} showtimes={day.showtimes} />)
+                movieData.days.map((day, index) => <SessionDay key={index}  weekday={day.weekday} date={day.date} showtimes={day.showtimes} />)
             }
             <Footer posterImg={movieData.posterURL} movieData={movieData}/>
         </Container>
