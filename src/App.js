@@ -13,8 +13,8 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={ Home } />
-        <Route path="/movies/:id" component={ Movie }/>
-        <Route path="/session/:id" component={ Session } />
+        <Route path="/sessions/:id" component={ Movie }/>
+        <Route path="/seats/:id" component={ Session } />
       </Switch>
     </div>
   );

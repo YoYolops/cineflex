@@ -13,7 +13,7 @@ function Footer(props) {
             </section>
             <RightSection>
                 <h2>{title}</h2>
-                {weekday && time ? `${weekday} - ${time}` : null}
+                <p>{weekday && time ? `${weekday} - ${time}` : null}</p>
             </RightSection>
         </Container>
     )
@@ -44,9 +44,23 @@ const Container = styled.footer`
 `
 
 const RightSection = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+
     h2 {
-        font-family: 'Roboto', sans-serif;
         font-size: 20px;
+        width: 100%;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 18px;
+        text-align: left;
+        width: 100%;
     }
 `
 

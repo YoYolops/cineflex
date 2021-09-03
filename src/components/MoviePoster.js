@@ -7,7 +7,7 @@ function MoviePoster(props) {
     return (
         <Background height={props.height} width={props.width}>
             <Link to={{
-                pathname: `/movies/${props.id}`,
+                pathname: `/sessions/${props.id}`,
                 state: {
                     movieId: props.id,
                     title: props.title

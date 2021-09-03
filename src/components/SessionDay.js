@@ -10,7 +10,7 @@ function SessionDay(props) {
             <Day>{`${weekday} - ${date}`}</Day>
             <div>
                 {
-                    showtimes.map((time, index) => <Link key={index} to={`/session/${time.id}`} >{time.name}</Link>)
+                    showtimes.map((time, index) => <Link key={index} to={`/seats/${time.id}`} >{time.name}</Link>)
                 }
             </div>
         </Container>
