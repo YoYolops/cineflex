@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import API from '../utils/api';
 
@@ -9,12 +10,14 @@ import Seat from '../components/Seat';
 import Footer from '../components/Footer';
 
 
-function Session() {
+function Session(props) {
+    const history = useHistory();
     const [ orderData, setOrderData ] = useState(null);
     const [ movieData, setMovieData ] = useState(null);
 
     const [ customerName, setCustomerName ] = useState("");
     const [ customerCPF, setCustomerCPF ] = useState("");
+    const [ selectedSeats, setSelectedSeats ] = useState([]);
 
     const { id } = useParams();
 
@@ -26,13 +29,34 @@ function Session() {
                 title: response.data.movie.title,
                 posterURL: response.data.movie.posterURL,
                 time: response.data.name,
-                weekday: response.data.day.weekday
+                weekday: response.data.day.weekday,
             })
 
             setOrderData(response.data);
         }
-        getSeats();
-    }, [id])
+        if(movieData === null) getSeats();
+    }, [id, movieData])
+
+    function confirmOrder() {
+        history.push("/sucess", {
+            ...orderData,
+            seats: selectedSeats,
+            customerCPF,
+            customerName
+        })
+    }
+
+    function addSelectedSeat(seat) {
+        const newSeats = [...selectedSeats, seat];
+        setSelectedSeats(newSeats);
+    }
+
+    function removeSelectedSeat(seat) {
+        const newSeats = [...selectedSeats]
+        const indexRemocao = newSeats.indexOf(seat);
+        newSeats.splice(indexRemocao, 1);
+        setSelectedSeats(newSeats);
+    }
 
     if(!orderData) return <Loading />
 
@@ -41,11 +65,11 @@ function Session() {
             <Title>Selecione o(s) assento(s)</Title>
             <SeatsContainer>
                 {
-                    orderData.seats.map(seat => <Seat available={seat.isAvailable} content={seat.name} />)
+                    orderData.seats.map(seat => <Seat key={seat.id} removeSeat={removeSelectedSeat} addSeat={addSelectedSeat}  available={seat.isAvailable} content={seat.name} />)
                 }
             </SeatsContainer>
 
-            <Cell>
+            <InputCell>
                 <label>Nome do comprador:</label>
                 <input
                     type="text"
@@ -54,9 +78,9 @@ function Session() {
                     value={customerName}
                     onChange={ e => setCustomerName(e.target.value) }
                 />
-            </Cell>
+            </InputCell>
 
-            <Cell>
+            <InputCell>
                 <label>CPF do comprador:</label>
                 <input
                     type="text"
@@ -65,7 +89,9 @@ function Session() {
                     value={customerCPF}
                     onChange={ e => setCustomerCPF(e.target.value) }
                 />
-            </Cell>
+            </InputCell>
+
+            <Button onClick={confirmOrder}>Reservar assento(s)</Button>
 
             <Footer movieData={movieData} />
         </Container>
@@ -74,6 +100,10 @@ function Session() {
 
 const Container = styled.div`
     background-color: #fff;
+    margin-bottom: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const Title = styled.h1`
@@ -92,10 +122,37 @@ const SeatsContainer = styled.div`
     margin-bottom: 30px;
 `
 
-const Cell = styled.div`
+const InputCell = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 10px 40px;
+    padding: 10px 20px;
+    font-family: 'Roboto', sans-serif;
+    width: 327px;
+
+    label {
+        margin-bottom: 7px;
+    }
+
+    input {
+        height: 51px;
+        border: 2px solid rgba(195, 207, 217, 0.8);
+        border-radius: 3px;
+        padding: 7px;
+        font-size: 18px;
+    }
+`
+
+const Button = styled.button`
+    width: 225px;
+    height: 42px;
+    border-radius: 3px;
+    background-color: var(--stOrange);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    margin-top: 40px;
 `
 
 export default Session;

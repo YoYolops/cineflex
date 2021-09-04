@@ -5,6 +5,8 @@ function Seat(props) {
     const [ selected, setSelected ] = useState(false);
 
     function selectSeat() {
+        if(selected) props.removeSeat(props.content)
+        else props.addSeat(props.content)
         setSelected(!selected);
     }
 
