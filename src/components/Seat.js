@@ -5,6 +5,11 @@ function Seat(props) {
     const [ selected, setSelected ] = useState(false);
 
     function selectSeat() {
+        if(!props.available) {
+            alert("Esse assento não está disponível");
+            return;
+        }
+
         if(selected) props.removeSeat(props.content)
         else props.addSeat(props.content)
         setSelected(!selected);
