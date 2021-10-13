@@ -10,7 +10,7 @@ import Seat from '../components/Seat';
 import Footer from '../components/Footer';
 
 
-function Session(props) {
+function Session() {
     const history = useHistory();
     const [ orderData, setOrderData ] = useState(null);
     const [ movieData, setMovieData ] = useState(null);
